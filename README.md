@@ -71,7 +71,7 @@ npx design-md-kit add obsidian-fintech
 No install at all (from a clone):
 
 ```bash
-git clone https://github.com/<your-username>/design-md-kit.git
+git clone https://github.com/BidyutRoy2/Design-md-kit.git
 cd design-md-kit
 node src/cli.js list
 node src/cli.js add mint-clinic ../my-project
