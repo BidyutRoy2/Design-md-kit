@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="aurora-glass">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>design-md-kit — Live Preview Gallery</title>
+<meta name="description" content="Six modern DESIGN.md design systems for AI coding agents, previewed live. One click re-skins the same UI." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Fraunces:ital,wght@0,600;1,600&family=Space+Grotesk:wght@500;700&family=Archivo+Black&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: Inter, system-ui, sans-serif; background:#0b0d18; color:#eef; transition: background .3s, color .3s; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 40px 20px 80px; }
+  header.top { text-align:center; padding: 32px 0 8px; color:#e8eaf6; }
+  header.top h1 { font-size: clamp(30px, 5vw, 52px); letter-spacing:-.02em; font-weight:800; }
+  header.top h1 span { background: linear-gradient(135deg,#7C5CFF,#22D3EE); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  header.top p { color:#9BA3C7; margin-top:10px; font-size:17px; }
+  header.top code { background:#161A33; padding:2px 8px; border-radius:6px; font-family:"JetBrains Mono",monospace; font-size:14px; color:#22D3EE; }
+  .picker { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:28px 0 34px; }
+  .picker button { cursor:pointer; border:1px solid #2a2f4d; background:#12152a; color:#dfe3ff; padding:10px 16px; border-radius:999px; font:600 14px Inter,sans-serif; transition:.18s; }
+  .picker button:hover { transform:translateY(-1px); border-color:#7C5CFF; }
+  .picker button[aria-pressed="true"] { background:linear-gradient(135deg,#7C5CFF,#22D3EE); color:#fff; border-color:transparent; }
+
+  /* ---------- stage: the same UI, re-skinned by each DESIGN.md ---------- */
+  .stage { border-radius:20px; padding:34px; transition: all .3s; }
+  .mock-nav { display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; }
+  .logo { font-weight:800; font-size:19px; }
+  .mock-links { display:flex; gap:20px; font-size:14px; opacity:.85; }
+  .mock-hero h2 { font-size: clamp(28px,4.4vw,44px); line-height:1.08; margin-bottom:12px; }
+  .mock-hero p { font-size:16.5px; line-height:1.6; max-width:56ch; }
+  .row { display:flex; flex-wrap:wrap; gap:14px; margin:24px 0 30px; align-items:center; }
+  .btn { cursor:pointer; font:600 15px Inter,sans-serif; padding:12px 22px; }
+  .btn-ghost { background:transparent; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+  .card { padding:20px; }
+  .card .k { font-size:11px; text-transform:uppercase; letter-spacing:.12em; }
+  .card .v { font-size:30px; font-weight:700; margin:6px 0 4px; }
+  .card .d { font-size:13.5px; }
+  .mock-input { margin-top:22px; display:flex; gap:10px; flex-wrap:wrap; }
+  .mock-input input { flex:1; min-width:220px; padding:12px 14px; font:15px Inter,sans-serif; }
+
+  /* aurora-glass */
+  [data-theme="aurora-glass"] .stage { background:#0E1020; border:1px solid #262B4D; color:#F2F3FA; box-shadow:0 24px 60px rgba(0,0,0,.5); }
+  [data-theme="aurora-glass"] .mock-hero p, [data-theme="aurora-glass"] .card .d { color:#9BA3C7; }
+  [data-theme="aurora-glass"] .btn { background:linear-gradient(135deg,#7C5CFF,#22D3EE); color:#fff; border:none; border-radius:10px; box-shadow:0 6px 24px rgba(124,92,255,.45); }
+  [data-theme="aurora-glass"] .btn-ghost { background:rgba(22,26,51,.7); color:#F2F3FA; border:1px solid #262B4D; box-shadow:none; backdrop-filter:blur(14px); }
+  [data-theme="aurora-glass"] .card { background:#161A33; border:1px solid #262B4D; border-radius:12px; }
+  [data-theme="aurora-glass"] .card .k { color:#22D3EE; font-family:"JetBrains Mono",monospace; }
+  [data-theme="aurora-glass"] .mock-input input { background:#161A33; border:1px solid #262B4D; border-radius:10px; color:#F2F3FA; }
+
+  /* obsidian-fintech */
+  [data-theme="obsidian-fintech"] .stage { background:#0A0A0B; border:1px solid #26262B; color:#FAFAF9; border-radius:8px; }
+  [data-theme="obsidian-fintech"] .mock-hero h2 { font-weight:600; }
+  [data-theme="obsidian-fintech"] .mock-hero p, [data-theme="obsidian-fintech"] .card .d { color:#A1A1AA; }
+  [data-theme="obsidian-fintech"] .card .v { font-variant-numeric:tabular-nums; }
+  [data-theme="obsidian-fintech"] .btn { background:#FAFAF9; color:#0A0A0B; border:none; border-radius:4px; }
+  [data-theme="obsidian-fintech"] .btn-ghost { background:transparent; color:#FAFAF9; border:1px solid #26262B; }
+  [data-theme="obsidian-fintech"] .card { background:#131316; border:1px solid #26262B; border-radius:6px; }
+  [data-theme="obsidian-fintech"] .card .k { color:#D4AF6A; }
+  [data-theme="obsidian-fintech"] .mock-input input { background:#131316; border:1px solid #26262B; border-radius:4px; color:#FAFAF9; }
+
+  /* paper-editorial */
+  [data-theme="paper-editorial"] .stage { background:#FAF7F2; color:#1C1917; border:1px solid #E7E0D2; border-radius:4px; }
+  [data-theme="paper-editorial"] .mock-hero h2 { font-family:Fraunces,Georgia,serif; font-weight:600; }
+  [data-theme="paper-editorial"] .mock-hero p { font-family:Georgia,serif; font-size:18px; line-height:1.75; color:#44403C; }
+  [data-theme="paper-editorial"] .btn { background:#1C1917; color:#FAF7F2; border:none; border-radius:2px; text-transform:uppercase; font-size:12px; letter-spacing:.1em; }
+  [data-theme="paper-editorial"] .btn-ghost { background:transparent; color:#B3402A; border:none; text-decoration:underline; }
+  [data-theme="paper-editorial"] .card { background:transparent; border-top:3px solid #B3402A; }
+  [data-theme="paper-editorial"] .card .k { color:#B3402A; }
+  [data-theme="paper-editorial"] .card .d { color:#78716C; }
+  [data-theme="paper-editorial"] .mock-input input { background:#fff; border:1px solid #E7E0D2; border-radius:2px; color:#1C1917; }
+
+  /* neo-brutal */
+  [data-theme="neo-brutal"] .stage { background:#FFF6E9; color:#111; border:3px solid #111; border-radius:4px; box-shadow:10px 10px 0 #111; }
+  [data-theme="neo-brutal"] .mock-hero h2 { font-family:"Archivo Black",sans-serif; text-transform:uppercase; }
+  [data-theme="neo-brutal"] .mock-hero p { font-family:"Space Grotesk",sans-serif; font-weight:500; }
+  [data-theme="neo-brutal"] .btn { background:#FFC900; color:#111; border:2px solid #111; border-radius:0; box-shadow:4px 4px 0 #111; font-family:"Space Grotesk",sans-serif; }
+  [data-theme="neo-brutal"] .btn:active { transform:translate(4px,4px); box-shadow:0 0 0 #111; }
+  [data-theme="neo-brutal"] .btn-ghost { background:#FF90E8; }
+  [data-theme="neo-brutal"] .card { background:#fff; border:2px solid #111; border-radius:0; box-shadow:6px 6px 0 #111; }
+  [data-theme="neo-brutal"] .card .k { font-family:"JetBrains Mono",monospace; }
+  [data-theme="neo-brutal"] .mock-input input { background:#fff; border:2px solid #111; border-radius:0; color:#111; }
+
+  /* mint-clinic */
+  [data-theme="mint-clinic"] .stage { background:#FFFFFF; color:#1E2B26; border:1px solid #E2EDE6; border-radius:20px; box-shadow:0 12px 40px rgba(14,124,102,.10); }
+  [data-theme="mint-clinic"] body, [data-theme="mint-clinic"] .mock-hero p { color:#5C6F68; }
+  [data-theme="mint-clinic"] .mock-hero p, [data-theme="mint-clinic"] .card .d { color:#5C6F68; }
+  [data-theme="mint-clinic"] .btn { background:#0E7C66; color:#fff; border:none; border-radius:999px; }
+  [data-theme="mint-clinic"] .btn-ghost { background:#fff; color:#0E7C66; border:1px solid #E2EDE6; }
+  [data-theme="mint-clinic"] .card { background:#F7FAF8; border:1px solid #E2EDE6; border-radius:16px; }
+  [data-theme="mint-clinic"] .card .k { color:#0E7C66; }
+  [data-theme="mint-clinic"] .mock-input input { background:#fff; border:1px solid #E2EDE6; border-radius:12px; color:#1E2B26; min-height:48px; }
+
+  /* terminal-dev */
+  [data-theme="terminal-dev"] .stage { background:#0B0E11; color:#D6DEE6; border:1px solid #232A31; border-radius:8px; font-family:"JetBrains Mono",monospace; }
+  [data-theme="terminal-dev"] .mock-hero h2::before { content:"$ "; color:#3FB950; }
+  [data-theme="terminal-dev"] .mock-hero p, [data-theme="terminal-dev"] .card .d { color:#8A97A5; }
+  [data-theme="terminal-dev"] .btn { background:transparent; color:#3FB950; border:1px solid #3FB950; border-radius:4px; font-family:"JetBrains Mono",monospace; text-transform:uppercase; font-size:12px; }
+  [data-theme="terminal-dev"] .btn-ghost { color:#39C5CF; border-color:#232A31; }
+  [data-theme="terminal-dev"] .card { background:#12161B; border:1px solid #232A31; border-radius:6px; }
+  [data-theme="terminal-dev"] .card .k { color:#39C5CF; }
+  [data-theme="terminal-dev"] .mock-input input { background:#12161B; border:1px solid #232A31; border-radius:4px; color:#D6DEE6; font-family:"JetBrains Mono",monospace; }
+
+  footer.note { text-align:center; color:#8A97A5; margin-top:34px; font-size:14.5px; line-height:1.7; }
+  footer.note code { font-family:"JetBrains Mono",monospace; color:#c9d4ff; background:#161A33; padding:2px 7px; border-radius:6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>One UI. <span>Six design brains.</span></h1>
+    <p>Every theme below is a complete <code>DESIGN.md</code> in this repo. Pick one, run <code>npx design-md-kit add aurora-glass</code>, and your AI agent designs like this — no more generic AI slop.</p>
+  </header>
+
+  <nav class="picker" aria-label="Choose a design system">
+    <button data-set="aurora-glass" aria-pressed="true">Aurora Glass</button>
+    <button data-set="obsidian-fintech" aria-pressed="false">Obsidian Fintech</button>
+    <button data-set="paper-editorial" aria-pressed="false">Paper Editorial</button>
+    <button data-set="neo-brutal" aria-pressed="false">Neo Brutal</button>
+    <button data-set="mint-clinic" aria-pressed="false">Mint Clinic</button>
+    <button data-set="terminal-dev" aria-pressed="false">Terminal Dev</button>
+  </nav>
+
+  <main class="stage">
+    <div class="mock-nav">
+      <div class="logo">◆ Northwind</div>
+      <div class="mock-links"><span>Product</span><span>Pricing</span><span>Docs</span></div>
+    </div>
+    <section class="mock-hero">
+      <h2>Ship calmer software, faster.</h2>
+      <p>Northwind turns scattered work into one clear dashboard your whole team actually opens every morning.</p>
+      <div class="row">
+        <button class="btn">Start free</button>
+        <button class="btn btn-ghost">Watch demo</button>
+      </div>
+    </section>
+    <section class="cards">
+      <div class="card"><div class="k">Active users</div><div class="v">12,480</div><div class="d">▲ 8.2% this week</div></div>
+      <div class="card"><div class="k">Revenue</div><div class="v">$48.2k</div><div class="d">▲ 3.1% this week</div></div>
+      <div class="card"><div class="k">Uptime</div><div class="v">99.99%</div><div class="d">Last 90 days</div></div>
+    </section>
+    <div class="mock-input">
+      <input type="email" placeholder="you@company.com" aria-label="Email" />
+      <button class="btn">Get started</button>
+    </div>
+  </main>
+
+  <footer class="note">
+    This page is one self-contained HTML file from <code>preview/</code> in the design-md-kit repo.<br />
+    Serve the repo with GitHub Pages and this gallery becomes your live demo.
+  </footer>
+</div>
+<script>
+  const buttons = document.querySelectorAll("[data-set]");
+  buttons.forEach((b) => b.addEventListener("click", () => {
+    document.documentElement.dataset.theme = b.dataset.set;
+    buttons.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+  }));
+</script>
+</body>
+</html>
